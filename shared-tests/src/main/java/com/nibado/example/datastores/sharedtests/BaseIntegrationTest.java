@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
@@ -43,7 +44,7 @@ public class BaseIntegrationTest {
     public void Should_return_a_product() {
         var product = db.findAll().stream().findFirst().get();
 
-        var response = template.getForEntity("/product/" + product.id(), Product.class);
+        var response = findById(product.id());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEqualTo(product);
@@ -93,5 +94,9 @@ public class BaseIntegrationTest {
         template.delete("/product/" + product.id());
 
         assertThat(db.findById(product.id())).isEmpty();
+    }
+
+    protected ResponseEntity<Product> findById(long id) {
+        return template.getForEntity("/product/" + id, Product.class);
     }
 }

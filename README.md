@@ -3,6 +3,7 @@
 ## Implemented
 
 * [Spring Data JDBC](./spring-data-jdbc)
+* [HazelCast](./hazelcast)
 
 ## TODO
 

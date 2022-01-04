@@ -7,6 +7,7 @@
         <module>shared</module>
 		<module>spring-data-jdbc</module>
 		<module>shared-tests</module>
+		<module>hazelcast</module>
 	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
