@@ -8,6 +8,7 @@
 		<module>spring-data-jdbc</module>
 		<module>shared-tests</module>
 		<module>hazelcast</module>
+		<module>spring-data-jpa</module>
 	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>

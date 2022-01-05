@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static com.nibado.example.datastores.sharedtests.TestData.PRODUCTS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,7 +73,7 @@ public class BaseIntegrationTest {
 
         var first = db.findAll().stream().findFirst().orElseThrow();
 
-        assertThat(response.getBody()).isEqualTo(first);
+        assertProduct(response.getBody(), first);
     }
 
     @Test
@@ -98,5 +99,11 @@ public class BaseIntegrationTest {
 
     protected ResponseEntity<Product> findById(long id) {
         return template.getForEntity("/product/" + id, Product.class);
+    }
+
+    protected void assertProduct(Product actual, Product expected) {
+        assertThat(actual.id()).isEqualTo(expected.id());
+        assertThat(actual.name()).isEqualTo(expected.name());
+        assertThat(actual.price().setScale(2, RoundingMode.HALF_UP)).isEqualTo(expected.price().setScale(2, RoundingMode.HALF_UP));
     }
 }
