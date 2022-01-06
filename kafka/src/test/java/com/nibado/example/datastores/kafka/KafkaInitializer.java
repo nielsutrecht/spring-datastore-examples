@@ -11,7 +11,7 @@ import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.utility.DockerImageName;
 
 public class KafkaInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-    private static final Logger LOG = LoggerFactory.getLogger(KafkaProductProducer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(KafkaInitializer.class);
     private static KafkaContainer KAFKA;
 
     @Override

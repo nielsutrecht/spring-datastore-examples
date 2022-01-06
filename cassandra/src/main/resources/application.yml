@@ -1,0 +1,6 @@
+spring:
+  data:
+    cassandra:
+      keyspace-name: product
+      local-datacenter: datacenter1
+      schema-action: recreate

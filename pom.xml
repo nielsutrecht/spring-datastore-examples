@@ -5,11 +5,12 @@
     <packaging>pom</packaging>
     <modules>
         <module>shared</module>
-		<module>spring-data-jdbc</module>
+		<module>jdbc</module>
 		<module>shared-tests</module>
 		<module>hazelcast</module>
-		<module>spring-data-jpa</module>
+		<module>jpa</module>
 		<module>kafka</module>
+		<module>cassandra</module>
 	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
@@ -19,9 +20,10 @@
 	</parent>
 	<groupId>datastores</groupId>
 	<artifactId>datastores-examples</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>datastores-examples</name>
 	<description>Spring Boot Datastore Examples</description>
+
 	<properties>
 		<java.version>17</java.version>
 		<flyway.version>8.3.0</flyway.version>
@@ -30,6 +32,7 @@
 		<testcontainers.version>1.16.2</testcontainers.version>
 		<avro.version>1.11.0</avro.version>
 		<awaitily.version>4.1.1</awaitily.version>
+		<spring.data.version>3.3.0</spring.data.version>
 	</properties>
 
 	<dependencies>
@@ -53,6 +56,11 @@
 				<version>${testcontainers.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-cassandra</artifactId>
+				<version>${spring.data.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.flywaydb</groupId>
