@@ -1,7 +1,7 @@
 package com.nibado.example.datastores.springjpa;
 
-import com.nibado.example.datastores.sharedtests.BaseIntegrationTest;
+import com.nibado.example.datastores.sharedtests.BaseDbIntegrationTest;
 
-class SpringDataJpaApplicationIntegrationTest extends BaseIntegrationTest {
+class SpringDataJpaApplicationIntegrationTest extends BaseDbIntegrationTest {
 
 }

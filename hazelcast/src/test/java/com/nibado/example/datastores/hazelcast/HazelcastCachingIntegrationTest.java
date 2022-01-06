@@ -1,12 +1,12 @@
 package com.nibado.example.datastores.hazelcast;
 
-import com.nibado.example.datastores.sharedtests.BaseIntegrationTest;
+import com.nibado.example.datastores.sharedtests.BaseDbIntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HazelcastCachingIntegrationTest extends BaseIntegrationTest {
+class HazelcastCachingIntegrationTest extends BaseDbIntegrationTest {
     @Autowired
     public ProductCache cache;
 
