@@ -9,6 +9,7 @@
 		<module>shared-tests</module>
 		<module>hazelcast</module>
 		<module>spring-data-jpa</module>
+		<module>kafka</module>
 	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
@@ -24,10 +25,12 @@
 	<properties>
 		<java.version>17</java.version>
 		<flyway.version>8.3.0</flyway.version>
+		<hazelcast.version>4.2.4</hazelcast.version>
 		<postgres.version>42.3.1</postgres.version>
 		<testcontainers.version>1.16.2</testcontainers.version>
+		<avro.version>1.11.0</avro.version>
+		<awaitily.version>4.1.1</awaitily.version>
 	</properties>
-
 
 	<dependencies>
 		<dependency>
@@ -56,11 +59,31 @@
 				<artifactId>flyway-core</artifactId>
 				<version>${flyway.version}</version>
 			</dependency>
-<!--			<dependency>-->
-<!--				<groupId>org.postgresql</groupId>-->
-<!--				<artifactId>postgresql</artifactId>-->
-<!--				<version>${pos}</version>-->
-<!--			</dependency>-->
+			<dependency>
+				<groupId>com.hazelcast</groupId>
+				<artifactId>hazelcast-all</artifactId>
+				<version>${hazelcast.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.avro</groupId>
+				<artifactId>avro</artifactId>
+				<version>${avro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.awaitility</groupId>
+				<artifactId>awaitility</artifactId>
+				<version>${awaitily.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>datastores</groupId>
+				<artifactId>shared</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>datastores</groupId>
+				<artifactId>shared-tests</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

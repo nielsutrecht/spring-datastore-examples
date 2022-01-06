@@ -1,0 +1,11 @@
+@namespace("com.nibado.example.datastores.kafka")
+
+protocol ProductProtocol {
+	record ProductEvent {
+		long id;
+		string name;
+		decimal(10,2) price;
+	}
+}
+
+
