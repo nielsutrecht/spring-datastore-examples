@@ -16,14 +16,14 @@ Base tests are reused.
 
 ## Implemented
 
-* [Spring Data JDBC](./jdbc) - [Documentation](https://spring.io/projects/spring-data-jdbc)
-* [Spring Data JPA](./jpa) - [Documentation](https://spring.io/projects/spring-data-jpa)
+* [JDBC](./jdbc) - [Documentation](https://spring.io/projects/spring-data-jdbc)
+* [JPA](./jpa) - [Documentation](https://spring.io/projects/spring-data-jpa)
 * [HazelCast](./hazelcast) - [Documentation](https://hazelcast.com/blog/spring-boot/)
 * [Kafka](./kafka) - [Documentation](https://spring.io/projects/spring-kafka)
+* [Cassandra](./cassandra) - [Documentation](https://docs.spring.io/spring-data/cassandra/docs/current/reference/html)
 
 ## TODO
 
-* Cassandra
 * Neo4J
 * ElasticSearch
 * DynamoDB
