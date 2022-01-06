@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HazelCastApplicationIntegrationTest extends BaseIntegrationTest {
+class HazelcastCachingIntegrationTest extends BaseIntegrationTest {
     @Autowired
     public ProductCache cache;
 

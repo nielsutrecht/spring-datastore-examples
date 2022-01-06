@@ -18,7 +18,7 @@ import static java.util.Collections.synchronizedList;
 public class KafkaProductConsumer implements ProductConsumer {
     private static final Logger LOG = LoggerFactory.getLogger(KafkaProductConsumer.class);
 
-    final List<Product> consumedProducts =  synchronizedList(new ArrayList<>());
+    private final List<Product> consumedProducts =  synchronizedList(new ArrayList<>());
 
     @KafkaListener(topics = "${service.topic}", groupId = "kafka-example")
     public void connectionStatesEvent(List<ConsumerRecord<String, ProductEvent>> records, Consumer<?, ?> consumer) {
