@@ -1,5 +1,6 @@
 package com.nibado.example.datastor.redis;
 
+import com.nibado.example.datastores.sharedtests.DockerImages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -8,7 +9,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextClosedEvent;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
-import org.testcontainers.utility.DockerImageName;
 
 public class RedisInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
     private static final Logger LOG = LoggerFactory.getLogger(RedisInitializer.class);
@@ -25,7 +25,7 @@ public class RedisInitializer implements ApplicationContextInitializer<Configura
 
     private void initializeLocal(ConfigurableApplicationContext context) {
         if(REDIS == null) {
-            REDIS = new GenericContainer(DockerImageName.parse("redis:6.2.6-alpine")).withExposedPorts(6379);
+            REDIS = new GenericContainer(DockerImages.REDIS).withExposedPorts(6379);
         }
         if(!REDIS.isRunning()) {
             REDIS.start();

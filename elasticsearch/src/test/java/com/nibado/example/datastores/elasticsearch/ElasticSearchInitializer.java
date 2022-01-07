@@ -1,4 +1,4 @@
-package com.nibado.example.datastores.kafka;
+package com.nibado.example.datastores.elasticsearch;
 
 import com.nibado.example.datastores.sharedtests.DockerImages;
 import org.slf4j.Logger;
@@ -7,12 +7,13 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextClosedEvent;
-import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
+import org.testcontainers.elasticsearch.ElasticsearchContainer;
 
-public class KafkaInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-    private static final Logger LOG = LoggerFactory.getLogger(KafkaInitializer.class);
-    private static KafkaContainer KAFKA;
+public class ElasticSearchInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+    private static final Logger LOG = LoggerFactory.getLogger(ElasticSearchInitializer.class);
+
+    private static ElasticsearchContainer ELASTIC;
 
     @Override
     public void initialize(ConfigurableApplicationContext context) {
@@ -24,25 +25,23 @@ public class KafkaInitializer implements ApplicationContextInitializer<Configura
     }
 
     private void initializeLocal(ConfigurableApplicationContext context) {
-        if(KAFKA == null) {
-            KAFKA = new KafkaContainer(DockerImages.KAFKA);
+        if(ELASTIC == null) {
+            ELASTIC = new ElasticsearchContainer(DockerImages.ELASTIC_SEARCH);
         }
-        if(!KAFKA.isRunning()) {
-            KAFKA.start();
+        if(!ELASTIC.isRunning()) {
+            ELASTIC.start();
             Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(LOG);
-            KAFKA.followOutput(logConsumer);
+            ELASTIC.followOutput(logConsumer);
         }
 
-        context.getBeanFactory().registerSingleton("kafkaContainer", KAFKA);
         context.addApplicationListener((event) -> {
             if (event instanceof ContextClosedEvent) {
-                KAFKA.stop();
+                ELASTIC.stop();
             }
         });
 
-        System.setProperty("spring.kafka.bootstrap-servers", KAFKA.getBootstrapServers());
         TestPropertyValues
-                .of("spring.kafka.bootstrap-servers:" + KAFKA.getBootstrapServers())
+                .of("spring.elasticsearch.uris:" + ELASTIC.getHttpHostAddress())
                 .applyTo(context);
     }
 }

@@ -22,9 +22,9 @@ Base tests are reused.
 * [Kafka](./kafka) - [Documentation](https://spring.io/projects/spring-kafka)
 * [Cassandra](./cassandra) - [Documentation](https://docs.spring.io/spring-data/cassandra/docs/current/reference/html)
 * [Redis](./redis) - [Documentation](https://docs.spring.io/spring-data/data-redis/docs/current/reference/html)
+* [ElasticSearch](./elasticsearch) - [Documentation](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html)
 
 ## TODO
 
 * Neo4J
-* ElasticSearch
 * DynamoDB

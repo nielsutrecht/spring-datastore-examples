@@ -12,6 +12,7 @@
 		<module>kafka</module>
 		<module>cassandra</module>
 		<module>redis</module>
+		<module>elasticsearch</module>
 	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>

@@ -36,8 +36,6 @@ public class CassandraInitializer implements ApplicationContextInitializer<Confi
         CASSANDRA.getCluster().newSession()
                 .execute("CREATE KEYSPACE IF NOT EXISTS product WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor' : 1};");
 
-//        context.getBeanFactory().registerSingleton("cassandraContainer", CASSANDRA);
-//        context.getBeanFactory().registerSingleton("cluster", CASSANDRA.getCluster());
         context.addApplicationListener((event) -> {
             if (event instanceof ContextClosedEvent) {
                 CASSANDRA.stop();
