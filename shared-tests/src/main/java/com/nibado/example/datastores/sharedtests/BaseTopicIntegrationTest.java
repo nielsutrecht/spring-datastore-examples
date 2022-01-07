@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -35,5 +36,10 @@ public abstract class BaseTopicIntegrationTest {
         await().atMost(30, SECONDS).until(() -> consumer.consumedProducts().size() == TEST_PRODUCTS.size());
 
         assertThat(consumer.consumedProducts()).hasSize(TEST_PRODUCTS.size());
+
+        var expectedIds = TEST_PRODUCTS.stream().map(p -> p.id()).collect(Collectors.toSet());
+        var actualIds = consumer.consumedProducts().stream().map(p -> p.id()).collect(Collectors.toSet());
+
+        assertThat(actualIds).containsExactlyElementsOf(expectedIds);
     }
 }

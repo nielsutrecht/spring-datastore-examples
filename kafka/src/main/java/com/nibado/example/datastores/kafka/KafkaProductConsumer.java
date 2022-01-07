@@ -25,7 +25,7 @@ public class KafkaProductConsumer implements ProductConsumer {
         LOG.info("Received {} records", records.size());
         var products = records.stream().map(cr -> {
             var event = cr.value();
-            return new Product(event.getId(), event.getName().toString(), event.getPrice());
+            return Product.of(event);
         }).toList();
 
         consumedProducts.addAll(products);

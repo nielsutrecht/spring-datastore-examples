@@ -24,8 +24,7 @@ public class KafkaProductProducer implements ListenableFutureCallback<SendResult
 
     @Override
     public void produce(Product product) {
-        var event = new ProductEvent(product.id(), product.name(), product.price());
-        template.send(topic, event).addCallback(this);
+        template.send(topic, product.toEvent()).addCallback(this);
     }
 
     @Override

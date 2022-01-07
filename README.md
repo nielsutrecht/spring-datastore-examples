@@ -21,10 +21,10 @@ Base tests are reused.
 * [HazelCast](./hazelcast) - [Documentation](https://hazelcast.com/blog/spring-boot/)
 * [Kafka](./kafka) - [Documentation](https://spring.io/projects/spring-kafka)
 * [Cassandra](./cassandra) - [Documentation](https://docs.spring.io/spring-data/cassandra/docs/current/reference/html)
+* [Redis](./redis) - [Documentation](https://docs.spring.io/spring-data/data-redis/docs/current/reference/html)
 
 ## TODO
 
 * Neo4J
 * ElasticSearch
 * DynamoDB
-* Redis
