@@ -27,6 +27,7 @@ Base tests are reused.
 * [ElasticSearch](./elasticsearch) - [Documentation](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html)
 * [Infinispan](./infinispan) - [Documentation](https://infinispan.org/docs/dev/titles/spring_boot/starter.html)
 * [Neo4J](./neo4j) - [Documentation](https://docs.spring.io/spring-data/neo4j/docs/current/reference/html)
+* [DynamoDB](./dynamodb) - [Documentation](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/home.html)
 
 ## Notes
 
@@ -70,6 +71,18 @@ The Neo4J 4.3 docker image seems to not listen properly on whatever Testcontaine
 
 Also the [Spring Boot guide](https://spring.io/guides/gs/accessing-data-neo4j/) is unfortunately rather outdated.
 
-## TODO
+### DynamoDB
 
-* DynamoDB
+Make sure you use the AWS v2 SDK. I had a lot of problems simply because I followed the first guide I ran into, which happened
+to be a V1 guide. This one has a problem with newer Java versions due to how it uses reflection. So; just use the V2 version of the 
+API and you're fine.
+
+This implementation creates the Product table in the config. How you want to do that is up to you :)
+
+Documentation:
+
+* https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/home.html
+* https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-dynamodb-enhanced.html
+
+There are some unofficial Spring Data implementations for DynamoDB but every one I found seems to be dead, or at least not 
+up to date and using the V2 API. 

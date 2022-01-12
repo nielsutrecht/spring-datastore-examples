@@ -1,0 +1,8 @@
+dynamodb:
+  region: eu-west-1
+  endpoint: PLACEHOLDER
+
+logging:
+  level:
+    com:
+      amazonaws: DEBUG
