@@ -1,7 +1,5 @@
-package com.nibado.example.datastores.hazelcast;
+package com.nibado.example.datastores.shared;
 
-import com.nibado.example.datastores.shared.Product;
-import com.nibado.example.datastores.shared.ProductDb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;

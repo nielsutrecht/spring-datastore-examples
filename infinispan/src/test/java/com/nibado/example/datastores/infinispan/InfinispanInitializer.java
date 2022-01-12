@@ -1,4 +1,4 @@
-package com.nibado.example.datastores.cassandra;
+package com.nibado.example.datastores.infinispan;
 
 import com.nibado.example.datastores.sharedtests.DockerImages;
 import org.slf4j.Logger;
@@ -7,13 +7,15 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextClosedEvent;
-import org.testcontainers.containers.CassandraContainer;
+import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 
-public class CassandraInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-    private static final Logger LOG = LoggerFactory.getLogger(CassandraInitializer.class);
+import java.util.Map;
 
-    private static CassandraContainer CASSANDRA;
+public class InfinispanInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+    private static final Logger LOG = LoggerFactory.getLogger(InfinispanInitializer.class);
+
+    private static GenericContainer INFINISPAN;
 
     @Override
     public void initialize(ConfigurableApplicationContext context) {
@@ -25,30 +27,30 @@ public class CassandraInitializer implements ApplicationContextInitializer<Confi
     }
 
     private void initializeLocal(ConfigurableApplicationContext context) {
-        if(CASSANDRA == null) {
-            CASSANDRA = new CassandraContainer<>(DockerImages.CASSANDRA);
+        var envVars = Map.of("USER", "user", "PASS", "pass");
+        if(INFINISPAN == null) {
+            INFINISPAN = new GenericContainer<>(DockerImages.INFINISPAN)
+                    .withEnv(envVars)
+                    .withExposedPorts(11222);
         }
-        if(!CASSANDRA.isRunning()) {
-            CASSANDRA.start();
+        if(!INFINISPAN.isRunning()) {
+            INFINISPAN.start();
             Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(LOG);
-            CASSANDRA.followOutput(logConsumer);
+            INFINISPAN.followOutput(logConsumer);
         }
-
-        CASSANDRA.getCluster().newSession()
-                .execute("CREATE KEYSPACE IF NOT EXISTS product WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor' : 1};");
 
         context.addApplicationListener((event) -> {
             if (event instanceof ContextClosedEvent) {
-                CASSANDRA.stop();
+                INFINISPAN.stop();
             }
         });
 
-        var contactPoint = String.format("%s:%s", CASSANDRA.getHost(), CASSANDRA.getMappedPort(9042));
+        var contactPoint = String.format("%s:%s", INFINISPAN.getContainerIpAddress(), INFINISPAN.getMappedPort(11222));
 
-        LOG.info("Cassandra active on {}", contactPoint);
+        LOG.info("Infinispan active on {}", contactPoint);
 
         TestPropertyValues
-                .of("spring.data.cassandra.contact-points:" + contactPoint)
+                .of("infinispan.remote.server-list:" + contactPoint)
                 .applyTo(context);
     }
 }

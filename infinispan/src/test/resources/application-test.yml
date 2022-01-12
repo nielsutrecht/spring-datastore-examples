@@ -1,0 +1,6 @@
+infinispan:
+  remote:
+    server-list: PLACEHOLDER
+    auth-username: user
+    auth-password: pass
+    java-serial-allowlist: com.nibado.example.datastores.shared.*

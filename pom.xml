@@ -13,6 +13,7 @@
 		<module>cassandra</module>
 		<module>redis</module>
 		<module>elasticsearch</module>
+		<module>infinispan</module>
 	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
@@ -35,6 +36,7 @@
 		<avro.version>1.11.0</avro.version>
 		<awaitily.version>4.1.1</awaitily.version>
 		<spring.data.version>3.3.0</spring.data.version>
+		<infinispan.version>13.0.5.Final</infinispan.version>
 	</properties>
 
 	<dependencies>
@@ -56,6 +58,13 @@
 				<groupId>org.testcontainers</groupId>
 				<artifactId>testcontainers-bom</artifactId>
 				<version>${testcontainers.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.infinispan</groupId>
+				<artifactId>infinispan-bom</artifactId>
+				<version>${infinispan.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

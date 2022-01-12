@@ -1,8 +1,5 @@
-package com.nibado.example.datastores.hazelcast;
+package com.nibado.example.datastores.infinispan;
 
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.topic.ITopic;
-import com.nibado.example.datastores.shared.Product;
 import com.nibado.example.datastores.shared.ProductCache;
 import com.nibado.example.datastores.shared.ProductController;
 import org.springframework.boot.SpringApplication;
@@ -12,9 +9,9 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableCaching
-public class HazelcastApplication {
+public class InfinispanApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(HazelcastApplication.class, args);
+		SpringApplication.run(InfinispanApplication.class, args);
 	}
 
 	@Bean
@@ -25,10 +22,5 @@ public class HazelcastApplication {
 	@Bean
 	public ProductController controller(ProductCache repository) {
 		return new ProductController(repository);
-	}
-
-	@Bean
-	public ITopic<Product> topic(HazelcastInstance hz) {
-		return hz.getTopic("product-events");
 	}
 }

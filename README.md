@@ -8,8 +8,10 @@ Most of the integration tests use the excellent [Testcontainers](https://www.tes
 containers during tests.
 
 The reference implementations implement [BaseDbIntegrationTest](./shared-tests/src/main/java/com/nibado/example/datastores/sharedtests/BaseDbIntegrationTest.java) 
-in the case of data stores and/or [BaseTopicIntegrationTest](./shared-tests/src/main/java/com/nibado/example/datastores/sharedtests/BaseTopicIntegrationTest.java)
-in the case of topics / queues. 
+in the case of data stores, [BaseCacheIntegrationTest](./shared-tests/src/main/java/com/nibado/example/datastores/sharedtests/BaseCacheIntegrationTest.java)
+in the case of caches and/or [BaseTopicIntegrationTest](./shared-tests/src/main/java/com/nibado/example/datastores/sharedtests/BaseTopicIntegrationTest.java)
+in the case of topics / queues. This saves me a lot of time by not having to rewrite the same tests for all the different 
+modules :)
 
 The [Hazelcast tests](./hazelcast/src/test/java/com/nibado/example/datastores/hazelcast) are a good example of how the 
 Base tests are reused.
@@ -23,6 +25,40 @@ Base tests are reused.
 * [Cassandra](./cassandra) - [Documentation](https://docs.spring.io/spring-data/cassandra/docs/current/reference/html)
 * [Redis](./redis) - [Documentation](https://docs.spring.io/spring-data/data-redis/docs/current/reference/html)
 * [ElasticSearch](./elasticsearch) - [Documentation](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html)
+* [Infinispan](./infinispan) - [Documentation](https://infinispan.org/docs/dev/titles/spring_boot/starter.html)
+
+## Notes
+
+In general it's important to remember that while most specific testcontainers (Cassandra, Postgres, etc.) expose the correct port by default,
+the generic container doesn't do this. So if you need to use a GenericContainer, make sure you don't forget the `.withExposedPorts(<port>)`.
+
+I personally prefer creating reuseable context initializers over [@Container annotations](https://www.testcontainers.org/test_framework_integration/junit_5/) in my tests because it allows me to set any Spring config 
+property before Spring itself starts. But @Container annotations work just as well in most cases.
+
+### Infinispan
+
+Infinispan was a bit more complex to set up than most others. A lot of documentation is for much older versions. In addition, the Infinispan documentation
+forgets to mention that you still need to add the Spring Boot caching starter. You also have to programmatically create the caches. So if you 
+see a message like this:
+
+    Error received from the server: org.infinispan.server.hotrod.CacheNotFoundException: 
+        Cache with name 'yourcache' not found amongst the configured caches
+
+or:
+
+    java.lang.IllegalArgumentException: Cannot find cache named 'yourcache' for Builder[..]
+
+It's because you simply did not create one:
+
+        var cfg = new ConfigurationBuilder()
+                .clustering()
+                .cacheMode(CacheMode.LOCAL)
+                .build();
+
+        cacheManager.administration().createCache("product", cfg);
+
+Make sure you don't set CacheMode to something like DIST_SYNC because then it will try to connect a cluster, which it won't 
+be able to, and then time out.
 
 ## TODO
 
