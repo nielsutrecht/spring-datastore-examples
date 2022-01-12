@@ -1,9 +1,10 @@
-package com.nibado.example.datastores.jpa;
+package com.nibado.example.datastores.neo4j;
 
 import com.nibado.example.datastores.shared.Product;
 import com.nibado.example.datastores.shared.ProductDb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class ProductRepository implements ProductDb {
 
     @Override
     public Product create(Product product) {
-        var entity = new ProductEntity(product.name(), product.price());
+        var entity = new ProductNode(product.name(), product.price());
         crudRepository.save(entity);
 
         LOG.info("Inserted product with id '{}', name '{}' and price '{}'", entity.getId(), entity.getName(), entity.getPrice());
@@ -41,7 +42,7 @@ public class ProductRepository implements ProductDb {
 
     @Override
     public void update(Product product) {
-        var entity = new ProductEntity(product.id(), product.name(), product.price());
+        var entity = new ProductNode(product.id(), product.name(), product.price());
 
         crudRepository.save(entity);
 
@@ -58,7 +59,7 @@ public class ProductRepository implements ProductDb {
         crudRepository.deleteById(id);
     }
 
-    private static Product entityToProduct(ProductEntity e) {
+    private static Product entityToProduct(ProductNode e) {
         return new Product(e.getId(), e.getName(), e.getPrice());
     }
 }

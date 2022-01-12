@@ -26,14 +26,18 @@ Base tests are reused.
 * [Redis](./redis) - [Documentation](https://docs.spring.io/spring-data/data-redis/docs/current/reference/html)
 * [ElasticSearch](./elasticsearch) - [Documentation](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html)
 * [Infinispan](./infinispan) - [Documentation](https://infinispan.org/docs/dev/titles/spring_boot/starter.html)
+* [Neo4J](./neo4j) - [Documentation](https://docs.spring.io/spring-data/neo4j/docs/current/reference/html)
 
 ## Notes
 
-In general it's important to remember that while most specific testcontainers (Cassandra, Postgres, etc.) expose the correct port by default,
+In general, it's important to remember that while most specific testcontainers (Cassandra, Postgres, etc.) expose the correct port by default,
 the generic container doesn't do this. So if you need to use a GenericContainer, make sure you don't forget the `.withExposedPorts(<port>)`.
 
-I personally prefer creating reuseable context initializers over [@Container annotations](https://www.testcontainers.org/test_framework_integration/junit_5/) in my tests because it allows me to set any Spring config 
-property before Spring itself starts. But @Container annotations work just as well in most cases.
+I personally prefer creating reusable context initializers over [@Container annotations](https://www.testcontainers.org/test_framework_integration/junit_5/) in my tests because it allows me to set any Spring config 
+property before Spring itself starts. Another big benefit is that it allows me
+to *not* use Testcontainers at all when I'm running on a CI system like Gitlab, and instead connect to a Gitlab service. 
+
+But @Container annotations work just as well in most other cases.
 
 ### Infinispan
 
@@ -60,7 +64,12 @@ It's because you simply did not create one:
 Make sure you don't set CacheMode to something like DIST_SYNC because then it will try to connect a cluster, which it won't 
 be able to, and then time out.
 
+### Neo4J
+
+The Neo4J 4.3 docker image seems to not listen properly on whatever Testcontainers is waiting on. 4.4 works fine :)
+
+Also the [Spring Boot guide](https://spring.io/guides/gs/accessing-data-neo4j/) is unfortunately rather outdated.
+
 ## TODO
 
-* Neo4J
 * DynamoDB
