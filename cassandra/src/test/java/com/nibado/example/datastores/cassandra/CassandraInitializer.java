@@ -48,7 +48,7 @@ public class CassandraInitializer implements ApplicationContextInitializer<Confi
         LOG.info("Cassandra active on {}", contactPoint);
 
         TestPropertyValues
-                .of("spring.data.cassandra.contact-points:" + contactPoint)
+                .of("spring.cassandra.contact-points:" + contactPoint)
                 .applyTo(context);
     }
 }

@@ -6,12 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 
 @Component
-public class KafkaProductProducer implements ListenableFutureCallback<SendResult<String, ProductEvent>>, ProductProducer {
+public class KafkaProductProducer implements ProductProducer {
     private static final Logger LOG = LoggerFactory.getLogger(KafkaProductProducer.class);
 
     private final KafkaTemplate<String, ProductEvent> template;
@@ -24,18 +22,15 @@ public class KafkaProductProducer implements ListenableFutureCallback<SendResult
 
     @Override
     public void produce(Product product) {
-        template.send(topic, product.toEvent()).addCallback(this);
-    }
+        var future = template.send(topic, product.toEvent());
 
-    @Override
-    public void onFailure(Throwable ex) {
-        LOG.error("Error producing event", ex);
+        future.whenComplete((result, ex) -> {
+            if (ex != null) {
+                LOG.error("Error producing event", ex);
+            } else {
+                var id = result.getProducerRecord().value().getId();
+                LOG.info("Published event for product {}", id);
+            }
+        });
     }
-
-    @Override
-    public void onSuccess(SendResult<String, ProductEvent> result) {
-        var id = result.getProducerRecord().value().getId();
-        LOG.info("Published event for product {}", id);
-    }
-
 }

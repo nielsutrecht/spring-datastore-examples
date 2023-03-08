@@ -1,3 +1,4 @@
 spring:
   elasticsearch:
-    uris: "http://localhost:9200"
+      uris: "http://localhost:9200"
+      password: s3cret

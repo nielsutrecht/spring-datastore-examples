@@ -45,7 +45,7 @@ public class InfinispanInitializer implements ApplicationContextInitializer<Conf
             }
         });
 
-        var contactPoint = String.format("%s:%s", INFINISPAN.getContainerIpAddress(), INFINISPAN.getMappedPort(11222));
+        var contactPoint = String.format("%s:%s", "127.0.0.1", INFINISPAN.getMappedPort(11222));
 
         LOG.info("Infinispan active on {}", contactPoint);
 

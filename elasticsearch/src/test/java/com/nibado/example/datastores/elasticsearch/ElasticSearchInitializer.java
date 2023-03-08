@@ -28,6 +28,7 @@ public class ElasticSearchInitializer implements ApplicationContextInitializer<C
         if(ELASTIC == null) {
             ELASTIC = new ElasticsearchContainer(DockerImages.ELASTIC_SEARCH);
         }
+
         if(!ELASTIC.isRunning()) {
             ELASTIC.start();
             Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(LOG);

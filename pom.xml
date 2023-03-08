@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.2</version>
+        <version>3.0.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>datastores</groupId>
@@ -31,14 +31,14 @@
 
     <properties>
         <java.version>17</java.version>
-        <flyway.version>8.3.0</flyway.version>
+        <flyway.version>9.15.2</flyway.version>
         <hazelcast.version>4.2.4</hazelcast.version>
         <postgres.version>42.3.1</postgres.version>
-        <testcontainers.version>1.16.2</testcontainers.version>
+        <testcontainers.version>1.17.6</testcontainers.version>
         <avro.version>1.11.0</avro.version>
         <awaitily.version>4.1.1</awaitily.version>
-        <spring.data.version>3.3.0</spring.data.version>
-        <infinispan.version>13.0.5.Final</infinispan.version>
+        <spring.data.version>4.0.3</spring.data.version>
+        <infinispan.version>14.0.6.Final</infinispan.version>
         <aws.sdk.version>2.17.108</aws.sdk.version>
     </properties>
 
