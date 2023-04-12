@@ -1,0 +1,19 @@
+spring:
+  kafka:
+    bootstrap-servers: placeholder
+    security:
+      protocol: PLAINTEXT
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      auto-offset-reset: earliest
+    producer:
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    listener:
+      type: batch
+    properties:
+        schema.registry.url: "http://localhost:8081"
+        specific.avro.reader: true
+
+service:
+  topic: product-events

@@ -10,6 +10,7 @@
         <module>hazelcast</module>
         <module>jpa</module>
         <module>kafka</module>
+        <module>kafka-confluent</module>
         <module>cassandra</module>
         <module>redis</module>
         <module>elasticsearch</module>
@@ -30,11 +31,12 @@
     <description>Spring Boot Datastore Examples</description>
 
     <properties>
+        <io.confluent.version>7.3.3</io.confluent.version>
         <java.version>17</java.version>
         <flyway.version>9.15.2</flyway.version>
         <hazelcast.version>4.2.4</hazelcast.version>
         <postgres.version>42.3.1</postgres.version>
-        <testcontainers.version>1.17.6</testcontainers.version>
+        <testcontainers.version>1.18.0</testcontainers.version>
         <avro.version>1.11.0</avro.version>
         <awaitily.version>4.1.1</awaitily.version>
         <spring.data.version>4.0.3</spring.data.version>
@@ -99,6 +101,16 @@
                 <version>${avro.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.confluent</groupId>
+                <artifactId>kafka-avro-serializer</artifactId>
+                <version>${io.confluent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.confluent</groupId>
+                <artifactId>kafka-schema-registry-client</artifactId>
+                <version>${io.confluent.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.awaitility</groupId>
                 <artifactId>awaitility</artifactId>
                 <version>${awaitily.version}</version>
@@ -115,5 +127,13 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <name>Confluent Packages</name>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
 
 </project>
